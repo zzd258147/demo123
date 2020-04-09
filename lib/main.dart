@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:package_info/package_info.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -50,6 +52,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _appName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _appName = info.appName;
+    });
+  }
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -98,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'The App Name is: $_appName.\nYou have pushed the button this many times:',
             ),
             Text(
               '$_counter',
